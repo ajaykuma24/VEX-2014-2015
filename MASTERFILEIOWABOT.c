@@ -296,6 +296,8 @@ task autonomous()
 
 task usercontrol()
 {
+
+
 	int thresh = 25;
 	nMotorEncoder[BLeft] = 0;
 	nMotorEncoder[BRight] = 0;
@@ -347,6 +349,11 @@ task usercontrol()
 					motor[TRight] =  vexRT[Ch2Xmtr2];
 					motor[BRight] =  vexRT[Ch2Xmtr2];
 				}
+<<<<<<< HEAD
+=======
+
+		}
+>>>>>>> origin/master
 
 		}
 		else if(vexRT[Ch2Xmtr2]<-thresh&&(!vexRT[Btn5DXmtr2]&&!vexRT[Btn6DXmtr2]&&!vexRT[Btn5UXmtr2]&&!vexRT[Btn6UXmtr2]))
@@ -407,7 +414,7 @@ task usercontrol()
 				motor[RIntake] = 100;
 				motor[LIntake] =  100;
 		}
-		else if(vexRT[Btn6D]||(vexRT[Ch3Xmtr2]<-thresh&&!vexRT[Btn6U]&&!vexRT[Btn6D]))
+			else if(vexRT[Btn6D]||(vexRT[Ch3Xmtr2]<-thresh&&!vexRT[Btn6U]&&!vexRT[Btn6D]))
 		{
 				motor[RIntake] = -100;
 				motor[LIntake] = -100;
@@ -417,6 +424,9 @@ task usercontrol()
 				motor[RIntake] = 0;
 				motor[LIntake] = 0;
 		}
+		if(vexRT[Btn5U])
+		{
+	}
 	wait1Msec(30);
 	}
 }
