@@ -20,7 +20,7 @@
 
 #pragma platform(VEX)
 
-//Competition Control and Duration Settingsx
+//Competition Control and Duration Settings
 #pragma competitionControl(Competition)
 //#pragma autonomousDuration(20)
 //#pragma userControlDuration(120)
@@ -36,61 +36,43 @@
 // following function.
 //
 /////////////////////////////////////////////////////////////////////////////////////////
-//int T_time=0;
-//int T_speed=0;
-//int G_encodercounts = 0;
+int G_time=0;
+int G_speed=0;
+int G_encodercounts = 0;
 void pre_auton()
 {
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
   // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
   bStopTasksBetweenModes = true;
-  //Clear the encoders before using them
+  	//Clear the encoders before using them
 
-	nMotorEncoder[BLeft] = 0;
-	nMotorEncoder[BRight] = 0;
-	nMotorEncoder[RRight] = 0;
-	nMotorEncoder[RLeft] = 0;
-	nMotorEncoder[FRight] = 0;
-	nMotorEncoder[FLeft] = 0;
-
+		nMotorEncoder[BLeft] = 0;
+		nMotorEncoder[BRight] = 0;
 
 
 	// All activities that occur before the competition starts
 	// Example: clearing encoders, setting servo positions, ...
 }
-void drive(int encoderCounts, int speed)
+void drive(int time, int speed)
 {
 
 
 	//While both of the encoders are less than the specified amount
-	while(nMotorEncoder[RRight] < encoderCounts)
-	{
+	//while(nMotorEncoder[RRight] < encoderCounts)
+	//{
 		//If the two encoder values are equal
-		if(abs(nMotorEncoder[RRight]) == abs(nMotorEncoder[RLeft]))
-		{
+		//if(abs(nMotorEncoder[RRight]) == abs(nMotorEncoder[RLeft]))
+		//{
 			//Move the robot forward at the specified speed
 			motor[RRight] = speed;
 			motor[FRight] = speed;
 			motor[RLeft] = speed;
 			motor[FLeft] = speed;
-		}
-		if(abs(nMotorEncoder[RRight]) < abs(nMotorEncoder[RLeft]))
-		{
-			//Move the robot forward at the specified speed
-			motor[RRight] = speed;
-			motor[FRight] = speed;
-			motor[RLeft] = speed+10;
-			motor[FLeft] = speed+10;
-		}
-		else if(abs(nMotorEncoder[RRight]) > abs(nMotorEncoder[RLeft]))
-		{
-			//Move the robot forward at the specified speed
-			motor[RRight] = speed+10;
-			motor[FRight] = speed+10;
-			motor[RLeft] = speed;
-			motor[FLeft] = speed;
-		}
-	}
+			wait1Msec(time);
+		//}
+
+
+
 	//Stop the robot
 	motor[RRight] = 0;
 	motor[FRight] = 0;
@@ -105,93 +87,75 @@ void drive(int encoderCounts, int speed)
 void turnLeft(int time, int speed)
 {
 	//Clear the encoders before using them
-		nMotorEncoder[BLeft] = 0;
-		nMotorEncoder[BRight] = 0;
-		nMotorEncoder[RRight] = 0;
-		nMotorEncoder[RLeft] = 0;
-		nMotorEncoder[FRight] = 0;
-		nMotorEncoder[FLeft] = 0;
 	//While the absolute value of the right motor's encoder is less
 	//than the specified amount
-	//Turn the robot to the left at the specified speed
+
+		//Turn the robot to the left at the specified speed
 	motor[RRight] = speed;
 	motor[FRight] = speed;
 	motor[RLeft] = -speed;
 	motor[FLeft] = -speed;
 	wait1Msec(time);
+
 	//Stop the robot
 	motor[RRight] = 0;
 	motor[FRight] = 0;
 	motor[RLeft] = 0;
 	motor[FLeft] = 0;
 }
+
 //Turn the robot left for the specified encoder counts
 //at a specified speed
 void turnRight(int time, int speed)
 {
 	//Clear the encoders
-	nMotorEncoder[BLeft] = 0;
-	nMotorEncoder[BRight] = 0;
-	nMotorEncoder[RRight] = 0;
-	nMotorEncoder[RLeft] = 0;
-	nMotorEncoder[FRight] = 0;
-	nMotorEncoder[FLeft] = 0;
+
+
 	//While the absolute value of the left motor's encoder is less
 	//than the specified amount
-	//Turn the robot to the right at the specified speed
+
+		//Turn the robot to the right at the specified speed
 	motor[RRight] = -speed;
 	motor[FRight] = -speed;
 	motor[RLeft] = speed;
 	motor[FLeft] = speed;
 	wait1Msec(time);
+
 	//Stop the robot
 	motor[RRight] = 0;
 	motor[FRight] = 0;
 	motor[RLeft] = 0;
 	motor[FLeft] = 0;
 }
-void arm(int encodercounts, int speed)
+
+
+void arm (int time, int speed)
 {
-	while(abs(nMotorEncoder[BRight]) < encodercounts)
-	{
-		//If the two encoder values are equal
-		if(abs(nMotorEncoder[BLeft]) == abs(nMotorEncoder[BRight]))
-		{
+	motor[BRight] = speed;
+	motor[BLeft] = speed;
+
 			//Move the robot forward at the specified speed
-			motor[TLeft] = speed;
-			motor[BLeft] = speed;
-			motor[TRight] = speed;
-			motor[BRight] = speed;
-		}
-		else if(abs(nMotorEncoder[BLeft]) < abs(nMotorEncoder[BRight]))
-		{
-			//Move the robot forward at the specified speed
-			motor[TLeft] = speed;
-			motor[BLeft] = speed;
-			motor[TRight] = speed + 10;
-			motor[BRight] = speed + 10;
-		}
-		else if(nMotorEncoder[BLeft] > abs(nMotorEncoder[BRight]))
-		{
-			//Move the robot forward at the specified speed
-			motor[TLeft] = speed + 10;
-			motor[BLeft] = speed + 10;
-			motor[TRight] = speed;
-			motor[BRight] = speed;
-		}
-	}
+	motor[TRight] = speed;
+	motor[TLeft] = speed;
+	wait1Msec(time);
+
 	motor[BRight] = 0;
 	motor[BLeft] = 0;
 	motor[TRight] = 0;
 	motor[TLeft] = 0;
 }
-void conveyor(int time, int speed)
+
+
+void conveyor (int time, int speed)
 {
 	motor[RIntake] = speed;
 	motor[LIntake] = speed;
+
 	wait1Msec(time);
+
 	motor[RIntake] = 0;
 	motor[LIntake] = 0;
+
 }
 
 
@@ -207,52 +171,7 @@ void conveyor(int time, int speed)
 task autonomous()
 {
   // .....................................................................................
-
-/*
-drive(750,100);//stop
-	motor[RIntake] = 100;
-	motor[LIntake] = 100;
-	wait1Msec(1000);
-
-	motor[RIntake] = 0;
-	motor[LIntake] = 0;
-drive(4600,100);
-arm(2250,100);
-	motor[RIntake] = -100;
-	motor[LIntake] = -100;
-	wait1Msec(2000);
-
-	motor[RIntake] = 0;
-	motor[LIntake] = 0;
-
-drive(3000,-100);//stop
-*/
-
-
-
-//move forward
-//stop
-//conveyor goes up
-//move forward (a lot)
-//stop
-//arm up
-//conveyor goes down
-//move back
-
-
-// .....................................................................................
-/*
-
-
-turnLeft(100,100);
-move(100,-100);
-arm(100,100);
-conveyor(100,-100);
-*/
-
-
-// .....................................................................................
-
+//drive(250, -50);
 
 drive(630,-100);
 arm(3000, 100);
@@ -270,32 +189,15 @@ drive(1500, -100);
 
 
 
-
-if (!SensorValue[dgtl1])
-{
-	bLCDBacklight = true;                                    // Turn on LCD Backlight
-string mainBattery, backupBattery;
-
-while(true)                                                        // An infinite loop to keep the program running until you terminate it
-{
-
-clearLCDLine(0);                                            // Clear line 1 (0) of the LCD
-clearLCDLine(1);                                            // Clear line 2 (1) of the LCD
-
-//Display the Primary Robot battery voltage
-displayLCDString(0, 0, "Primary: ");
-sprintf(mainBattery, "%1.2f%c", nImmediateBatteryLevel/1000.0,'V'); //Build the value to be displayed
-displayNextLCDString(mainBattery);
+//turnLeft(100,100);
+//drive(100,-100);
+//StartTask(arm);
+//StartTask(conveyor);
 
 
-//Display the Backup battery voltage
-displayLCDString(1, 0, "Backup: ");
-sprintf(backupBattery, "%1.2f%c", BackupBatteryLevel/1000.0, 'V');    //Build the value to be displayed
-displayNextLCDString(backupBattery);
-wait1Msec(2000);
-		}
+// .....................................................................................
 
-}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -309,9 +211,7 @@ wait1Msec(2000);
 
 task usercontrol()
 {
-
-
-	int thresh = 25;
+		int thresh = 25;
 	nMotorEncoder[BLeft] = 0;
 	nMotorEncoder[BRight] = 0;
 
@@ -319,6 +219,8 @@ task usercontrol()
 	{
 		if(abs(vexRT[Ch3])>thresh)
 		{
+
+
 				motor[FLeft] = vexRT[Ch3];
 				motor[RLeft] =  vexRT[Ch3];
 
@@ -338,6 +240,7 @@ task usercontrol()
 				motor[FRight] = 0;
 				motor[RRight] =  0;
 		}
+
 
 		if(vexRT[Ch2Xmtr2]>thresh&&(!vexRT[Btn5DXmtr2]&&!vexRT[Btn6DXmtr2]&&!vexRT[Btn5UXmtr2]&&!vexRT[Btn6UXmtr2]))
 		{
@@ -365,7 +268,6 @@ task usercontrol()
 				}
 
 		}
-
 		else if(vexRT[Ch2Xmtr2]<-thresh&&(!vexRT[Btn5DXmtr2]&&!vexRT[Btn6DXmtr2]&&!vexRT[Btn5UXmtr2]&&!vexRT[Btn6UXmtr2]))
 		{
 				if(abs(nMotorEncoder[BLeft]) == abs(nMotorEncoder[BRight]))
@@ -434,9 +336,6 @@ task usercontrol()
 				motor[RIntake] = 0;
 				motor[LIntake] = 0;
 		}
-		if(vexRT[Btn5U])
-		{
-	}
 	wait1Msec(30);
-	}
+}
 }
