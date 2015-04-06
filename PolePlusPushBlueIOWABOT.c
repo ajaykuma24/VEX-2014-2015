@@ -254,17 +254,17 @@ task usercontrol()
 
 				else if(abs(nMotorEncoder[BLeft]) < abs(nMotorEncoder[BRight]))
 				{
-					motor[TLeft] =  vexRT[Ch2Xmtr2] +10;
-					motor[BLeft] =  vexRT[Ch2Xmtr2] +10;
-					motor[TRight] =  vexRT[Ch2Xmtr2];
-					motor[BRight] =  vexRT[Ch2Xmtr2];
+					motor[TLeft] =  vexRT[Ch2Xmtr2] ;
+					motor[BLeft] =  vexRT[Ch2Xmtr2] ;
+					motor[TRight] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[BRight] =  vexRT[Ch2Xmtr2]*0.90;
 				}
 				else if((abs(nMotorEncoder[BLeft])) > abs(nMotorEncoder[BRight]))
 				{
-					motor[TLeft] =  vexRT[Ch2Xmtr2];
-					motor[BLeft] =  vexRT[Ch2Xmtr2];
-					motor[TRight] =  vexRT[Ch2Xmtr2]+10;
-					motor[BRight] =  vexRT[Ch2Xmtr2]+10;
+					motor[TLeft] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[BLeft] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[TRight] =  vexRT[Ch2Xmtr2];
+					motor[BRight] =  vexRT[Ch2Xmtr2];
 				}
 
 		}
@@ -279,17 +279,17 @@ task usercontrol()
 				}
 				else if(abs(nMotorEncoder[BLeft]) < abs(nMotorEncoder[BRight]))
 				{
-					motor[TLeft] =  vexRT[Ch2Xmtr2] +5;
-					motor[BLeft] =  vexRT[Ch2Xmtr2] +5;
-					motor[TRight] =  vexRT[Ch2Xmtr2];
-					motor[BRight] =  vexRT[Ch2Xmtr2];
+					motor[TLeft] =  vexRT[Ch2Xmtr2] ;
+					motor[BLeft] =  vexRT[Ch2Xmtr2] ;
+					motor[TRight] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[BRight] =  vexRT[Ch2Xmtr2]*0.90;
 				}
 				else if(abs(nMotorEncoder[BLeft]) > abs(nMotorEncoder[BRight]))
 				{
-					motor[TLeft] =  vexRT[Ch2Xmtr2];
-					motor[BLeft] =  vexRT[Ch2Xmtr2];
-					motor[TRight] =  vexRT[Ch2Xmtr2]+5;
-					motor[BRight] =  vexRT[Ch2Xmtr2]+5;
+					motor[TLeft] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[BLeft] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[TRight] =  vexRT[Ch2Xmtr2];
+					motor[BRight] =  vexRT[Ch2Xmtr2];
 				}
 		}
 
@@ -323,13 +323,13 @@ task usercontrol()
 
 		if(vexRT[Btn6U]||(vexRT[Ch3Xmtr2]>thresh&&!vexRT[Btn6U]&&!vexRT[Btn6D]))
 		{
-				motor[RIntake] = 100;
-				motor[LIntake] =  100;
+				motor[RIntake] = 70;
+				motor[LIntake] =  70;
 		}
 			else if(vexRT[Btn6D]||(vexRT[Ch3Xmtr2]<-thresh&&!vexRT[Btn6U]&&!vexRT[Btn6D]))
 		{
-				motor[RIntake] = -100;
-				motor[LIntake] = -100;
+				motor[RIntake] = -70;
+				motor[LIntake] = -70;
 		}
 		else
 		{
