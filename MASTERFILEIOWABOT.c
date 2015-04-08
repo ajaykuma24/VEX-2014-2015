@@ -245,6 +245,7 @@ void conveyor (int G_time, int G_speed)
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 //Autonomii selecte using jumpers!!!
+
 task autonomous()
 {
   // .....................................................................................
@@ -252,23 +253,177 @@ task autonomous()
   // .....................................................................................
 	if(SensorValue[dgtl12]&&SensorValue[dgtl11]&&SensorValue[dgtl10])
 	{
-		//Auton 1:
+		//Auton 1: PolePlusPushRedIOWABOT
+	  // .....................................................................................
+		//drive(250, -50);
+
+		drive(630,-100);
+		arm(3000, 100, 1);
+		arm(1500, -50,1);
+		conveyor(500, -50);
+		arm(1500, -50,1);
+		drive(1500, -100);
+		turnRight(250, 100);
+		drive(2250, 100);
+		drive(1500, -100);
+
+		// .....................................................................................
+
+
+
+//turnLeft(100,100);
+//drive(100,-100);
+//StartTask(arm);
+//StartTask(conveyor);
+
+
+// .....................................................................................
+
+
+
 	}
 	else if(SensorValue[dgtl12]&&SensorValue[dgtl11]&&!SensorValue[dgtl10])
 	{
-		//Auton 2:
+		//Auton 2: PolePlusPushBlueIOWABOT
+	// .....................................................................................
+//drive(250, -50);
+
+drive(630,-100);
+arm(3000, 100,1);
+arm(1500, -50,1);
+conveyor(500, -50);
+arm(1500, -50,1);
+drive(1750, -100);
+turnLeft(250, 100);
+drive(2250, 100);
+drive(1500, -100);
+
+
+
+// .....................................................................................
+
+
+
+//turnLeft(100,100);
+//drive(100,-100);
+//StartTask(arm);
+//StartTask(conveyor);
+
+
+// .....................................................................................
+
 	}
 	else if(SensorValue[dgtl12]&&!SensorValue[dgtl11]&&SensorValue[dgtl10])
 	{
-		//Auton 3:
+		//Auton 3: BlueSkyriseAutonIOWABOT
+	  // .....................................................................................
+
+
+
+//move forward
+//stop
+//conveyor goes up
+//move forward (a lot)
+//stop
+//arm up
+//conveyor goes down
+//move back
+
+
+// .....................................................................................
+/*
+
+
+turnLeft(100,100);
+move(100,-100);
+arm(100,100);
+conveyor(100,-100);
+*/
+
+
+// .....................................................................................
+
 	}
 	else if(SensorValue[dgtl12]&&!SensorValue[dgtl11]&&!SensorValue[dgtl10])
 	{
-		//Auton 4:
+		//Auton 4: RedSkyriseAutonIOWABOT
+	// .....................................................................................
+
+
+turnLeft(100,100);
+drive(750,-100);
+arm(1750,100,1);
+drive(750,100);
+conveyor(600,100);
+drive(750,-100);
+turnRight(100,100);
+drive(750,100);
+arm(1750,-100,1);
+conveyor(750,-100);
+
+
+//turn left
+//move backward
+//arm up
+//move forward
+//conveyor goes up
+//move backward
+//turn right
+//move forward
+//conveyor down
+
+
+// .....................................................................................
+/*
+
+
+turnLeft(100,100);
+move(100,-100);
+arm(100,100);
+conveyor(100,-100);
+*/
+
+
+// .....................................................................................
+
 	}
 	else if(!SensorValue[dgtl12]&&SensorValue[dgtl11]&&SensorValue[dgtl10])
 	{
-		//Auton 5:
+		//Auton 5: StraightCubeAutonIOWABOT
+	// .....................................................................................
+
+
+drive(750,100);//stop
+
+conveyor(750,100);
+drive(3000,100);
+arm(1750,100,1);
+conveyor(600,-100);
+drive(1000,-100);//stop
+
+//move forward
+//stop
+//conveyor goes up
+//move forward (a lot)
+//stop
+//arm up
+//conveyor goes down
+//move back
+
+
+// .....................................................................................
+/*
+
+
+turnLeft(100,100);
+move(100,-100);
+arm(100,100);
+conveyor(100,-100);
+*/
+
+
+// .....................................................................................
+
 	}
 	else if(!SensorValue[dgtl12]&&SensorValue[dgtl11]&&!SensorValue[dgtl10])
 	{
@@ -285,6 +440,7 @@ task autonomous()
 
 }
 
+
 /////////////////////////////////////////////////////////////////////////////////////////
 //
 //                                 User Control Task
@@ -299,8 +455,14 @@ task usercontrol()
 
 
 	int thresh = 25;
-	nMotorEncoder[BLeft] = 0;
-	nMotorEncoder[BRight] = 0;
+	float corr = 0.825;
+	float corr2 = 1.05;
+		nMotorEncoder[BLeft] = 0;
+		nMotorEncoder[BRight] = 0;
+		nMotorEncoder[RRight] = 0;
+		nMotorEncoder[RLeft] = 0;
+		nMotorEncoder[FRight] = 0;
+		nMotorEncoder[FLeft] = 0;
 
 	while(1)
 	{
@@ -339,23 +501,18 @@ task usercontrol()
 				{
 					motor[TLeft] =  vexRT[Ch2Xmtr2] ;
 					motor[BLeft] =  vexRT[Ch2Xmtr2] ;
-					motor[TRight] =  vexRT[Ch2Xmtr2]*0.90;
-					motor[BRight] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[TRight] =  vexRT[Ch2Xmtr2]*corr;
+					motor[BRight] =  vexRT[Ch2Xmtr2]*corr;
 				}
 				else if((abs(nMotorEncoder[BLeft])) > abs(nMotorEncoder[BRight]))
 				{
-					motor[TLeft] =  vexRT[Ch2Xmtr2]*0.90;
-					motor[BLeft] =  vexRT[Ch2Xmtr2]*0.90;
+					motor[TLeft] =  vexRT[Ch2Xmtr2]*corr;
+					motor[BLeft] =  vexRT[Ch2Xmtr2]*corr;
 					motor[TRight] =  vexRT[Ch2Xmtr2];
 					motor[BRight] =  vexRT[Ch2Xmtr2];
 				}
-<<<<<<< HEAD
-=======
-
 		}
->>>>>>> origin/master
 
-		}
 		else if(vexRT[Ch2Xmtr2]<-thresh&&(!vexRT[Btn5DXmtr2]&&!vexRT[Btn6DXmtr2]&&!vexRT[Btn5UXmtr2]&&!vexRT[Btn6UXmtr2]))
 		{
 				if(abs(nMotorEncoder[BLeft]) == abs(nMotorEncoder[BRight]))
@@ -367,40 +524,36 @@ task usercontrol()
 				}
 				else if(abs(nMotorEncoder[BLeft]) < abs(nMotorEncoder[BRight]))
 				{
-					motor[TLeft] =  vexRT[Ch2Xmtr2] ;
-					motor[BLeft] =  vexRT[Ch2Xmtr2] ;
-					motor[TRight] =  vexRT[Ch2Xmtr2]*0.90;
-					motor[BRight] =  vexRT[Ch2Xmtr2]*0.90;
-				}
-				else if(abs(nMotorEncoder[BLeft]) > abs(nMotorEncoder[BRight]))
-				{
-					motor[TLeft] =  vexRT[Ch2Xmtr2]*0.90;
-					motor[BLeft] =  vexRT[Ch2Xmtr2]*0.90;
+
+					motor[TLeft] =  vexRT[Ch2Xmtr2]*corr2;
+					motor[BLeft] =  vexRT[Ch2Xmtr2] *corr2;
 					motor[TRight] =  vexRT[Ch2Xmtr2];
 					motor[BRight] =  vexRT[Ch2Xmtr2];
 				}
+				else if(abs(nMotorEncoder[BLeft]) > abs(nMotorEncoder[BRight]))
+				{
+					motor[TLeft] =  vexRT[Ch2Xmtr2];
+					motor[BLeft] =  vexRT[Ch2Xmtr2];
+					motor[TRight] =  vexRT[Ch2Xmtr2]*corr2;
+					motor[BRight] =  vexRT[Ch2Xmtr2]*corr2;
+				}
 		}
 
-		else if(vexRT[Btn5UXmtr2]&&abs(vexRT[Ch2Xmtr2])<thresh)
+		else if((vexRT[Btn5UXmtr2]||vexRT[Btn6UXmtr2])&&abs(vexRT[Ch2Xmtr2])<thresh)
 		{
-				motor[TLeft] =  70;
-				motor[BLeft] =  70;
+				motor[TLeft] =  vexRT[Btn5UXmtr2]*70;
+				motor[BLeft] =  vexRT[Btn5UXmtr2]*70;
+				motor[TRight] =  vexRT[Btn6UXmtr2]*70;
+				motor[BRight] =  vexRT[Btn6UXmtr2]*70;
 		}
-		else if(vexRT[Btn5DXmtr2]&&abs(vexRT[Ch2Xmtr2])<thresh)
+		else if((vexRT[Btn5DXmtr2]||vexRT[Btn6DXmtr2])&&abs(vexRT[Ch2Xmtr2])<thresh)
 		{
-				motor[TLeft] =  -70;
-				motor[BLeft] =  -70;
+				motor[TLeft] =  vexRT[Btn5DXmtr2]*-70;
+				motor[BLeft] =  vexRT[Btn5DXmtr2]*-70;
+				motor[TRight] =  vexRT[Btn6DXmtr2]*-70;
+				motor[BRight] =  vexRT[Btn6DXmtr2]*-70;
 		}
-		else if(vexRT[Btn6UXmtr2]&&abs(vexRT[Ch2Xmtr2])<thresh)
-		{
-				motor[TRight] =  70;
-				motor[BRight] =  70;
-		}
-		else if(vexRT[Btn6DXmtr2]&&abs(vexRT[Ch2Xmtr2])<thresh)
-		{
-				motor[TRight] =  -70;
-				motor[BRight] =  -70;
-		}
+
 		else if(abs(vexRT[Ch2Xmtr2])<=thresh&&(!vexRT[Btn5DXmtr2]&&!vexRT[Btn6DXmtr2]&&!vexRT[Btn5UXmtr2]&&!vexRT[Btn6UXmtr2]))
 		{
 				motor[TLeft] = 0;
@@ -424,9 +577,23 @@ task usercontrol()
 				motor[RIntake] = 0;
 				motor[LIntake] = 0;
 		}
-		if(vexRT[Btn5U])
+	/*	if(vexRT[Btn7UXmtr2])
 		{
-	}
+			corr = corr+0.05;
+		}
+		else if(vexRT[Btn7DXmtr2])
+		{
+			corr=corr-0.05;
+		}*/
+		if(vexRT[Btn7LXmtr2])
+		{
+		nMotorEncoder[BLeft] = 0;
+		nMotorEncoder[BRight] = 0;
+		nMotorEncoder[RRight] = 0;
+		nMotorEncoder[RLeft] = 0;
+		nMotorEncoder[FRight] = 0;
+		nMotorEncoder[FLeft] = 0;
+		}
 	wait1Msec(30);
 	}
 }
