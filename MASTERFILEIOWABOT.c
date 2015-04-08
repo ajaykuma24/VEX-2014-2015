@@ -471,7 +471,7 @@ task usercontrol()
 				motor[FLeft] = vexRT[Ch3];
 				motor[RLeft] =  vexRT[Ch3];
 		}
-		else if(abs(vexRT[Ch3])<=thresh)
+		else if(abs(vexRT[Ch3])<=thresh&&(!vexRT[Btn8D]&&!vexRT[Btn8U]&&!vexRT[Btn8L]&&!vexRT[Btn8R]))
 		{
 				motor[FLeft] = 0;
 				motor[RLeft] =  0;
@@ -481,11 +481,47 @@ task usercontrol()
 				motor[FRight] = vexRT[Ch2];
 				motor[RRight] =  vexRT[Ch2];
 		}
-		else if(abs(vexRT[Ch2])<=thresh)
+		else if(abs(vexRT[Ch2])<=thresh&&(!vexRT[Btn8D]&&!vexRT[Btn8U]&&!vexRT[Btn8L]&&!vexRT[Btn8R]))
 		{
 				motor[FRight] = 0;
 				motor[RRight] =  0;
 		}
+		if(vexRT[Btn8D]&&!vexRT[Btn8U]&&!vexRT[Btn8L]&&!vexRT[Btn8R])
+		{
+			motor[FLeft] = -50;
+			motor[FRight] = -50;
+			motor[RLeft] = -50;
+			motor[RRight] = -50;
+		}
+		else if(!vexRT[Btn8D]&&!vexRT[Btn8U]&&!vexRT[Btn8L]&&vexRT[Btn8R])
+		{
+			motor[FLeft] = 50;
+			motor[FRight] = -50;
+			motor[RLeft] = 50;
+			motor[RRight] = -50;
+		}
+		else if(!vexRT[Btn8D]&&vexRT[Btn8U]&&!vexRT[Btn8L]&&!vexRT[Btn8R])
+		{
+			motor[FLeft] = 50;
+			motor[FRight] = 50;
+			motor[RLeft] = 50;
+			motor[RRight] = 50;
+		}
+		else if(!vexRT[Btn8D]&&!vexRT[Btn8U]&&vexRT[Btn8L]&&!vexRT[Btn8R])
+		{
+			motor[FLeft] = -50;
+			motor[FRight] = 50;
+			motor[RLeft] = -50;
+			motor[RRight] = 50;
+		}
+		else if(!vexRT[Btn8D]&&!vexRT[Btn8U]&&!vexRT[Btn8L]&&!vexRT[Btn8R])
+		{
+			motor[FLeft] = 0;
+			motor[FRight] = 0;
+			motor[RLeft] = 0;
+			motor[RRight] = 0;
+		}
+
 
 		if(vexRT[Ch2Xmtr2]>thresh&&(!vexRT[Btn5DXmtr2]&&!vexRT[Btn6DXmtr2]&&!vexRT[Btn5UXmtr2]&&!vexRT[Btn6UXmtr2]))
 		{
